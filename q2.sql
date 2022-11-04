@@ -29,7 +29,7 @@ from
 from Client, Billed, Request
 where Client.client_id = Request.client_id
 	and Billed.request_id = Request.request_id	
-	and datetime < '2021-01-01'::date) AS a
+	and datetime < '2020-01-01'::date) AS a
 group by client_id
 having sum(amount) >= 500; -- costing at least $500 in total 
 
@@ -56,6 +56,6 @@ having count(Client.client_id) < num_past_rides;
 -- Your query that answers the question goes below the "insert into" line:
 INSERT INTO q2
 select new_rides.client_id, CONCAT(firstname, ' ', surname) as name, 
-	email, billed, (num_past_rides - num_new_rides) as decline
+	email, billed, (num_new_rides - num_past_rides) as decline
 from new_rides, Client
 where new_rides.client_id = Client.client_id;
